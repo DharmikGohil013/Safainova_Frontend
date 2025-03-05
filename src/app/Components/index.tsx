@@ -9,6 +9,7 @@ const Home = (props: Props) => {
   return (
     <>
     <Hero/>
+    <Home/>
     <Features/>
     <FAQ/>
     </>

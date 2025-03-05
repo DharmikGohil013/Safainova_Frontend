@@ -7,46 +7,37 @@ import { FiUser, FiLock } from "react-icons/fi";
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); // State to hold error messages
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      // Check for network errors
       if (!response.ok) {
+        // Get error message from response and throw error
         const errorData = await response.json();
-        throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
+        throw new Error(
+          errorData.message || `HTTP error! Status: ${response.status}`
+        );
       }
 
       const data = await response.json();
       localStorage.setItem("accessToken", data.token);
       router.push("/");
-
     } catch (err) {
-      // Detailed error logging
       console.error("Login Error:", err);
+      // Set error message to be displayed on screen
       
-      // Handle different error types
-      if (err.name === "AbortError") {
-        setError("Request was aborted");
-      } else if (err.message.includes("fetch")) {
-        setError("Network error - Check your connection");
-      } else {
-        setError(err.message || "Authentication failed");
-      }
     } finally {
       setLoading(false);
     }
@@ -59,9 +50,10 @@ const SignInPage = () => {
           Sign In
         </h2>
 
+        {/* Show error message if an error exists */}
         {error && (
           <div className="bg-red-100 text-red-600 p-3 rounded mb-4">
-            {error}
+            Error: {error}
           </div>
         )}
 
@@ -112,10 +104,13 @@ const SignInPage = () => {
           </button>
 
           {/* Forgot Password Link */}
-          <div className="mt-4 text-center">  
-            <Link href="/forgot-password" className="text-emerald-600 hover:underline">
+          <div className="mt-4 text-center">
+            <Link
+              href="/forgot-password"
+              className="text-emerald-600 hover:underline"
+            >
               Forgot Password?
-            </Link>submit 
+            </Link>
           </div>
         </form>
       </div>
@@ -123,4 +118,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;  
+export default SignInPage;
