@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  presets: ['@next/babel'],
-    images: {
-        domains: ['avatars.githubusercontent.com'], 
-      },
-}
+  // No need for experimental.appDir in Next.js 14
+  // ...other options
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
