@@ -4,10 +4,11 @@
   "private": true,
   "engine": "18.17.0",
   "scripts": {
+    "lint": "next lint",
+    "export": "next export",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
